@@ -1,0 +1,243 @@
+/* ──── 案源價值論述生成系統 — 自訂樣式 ──── */
+
+/* ─── 確保深色背景 ─── */
+body {
+  background-color: #0F1A2E !important;
+}
+
+/* ─── 玻璃態卡片 ─── */
+.glass-card {
+  background: rgba(15, 26, 46, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.glass-nav {
+  background: rgba(15, 26, 46, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── 輸入框 ─── */
+.input-field {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 0.75rem;
+  color: #E8F0FB;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+.input-field::placeholder {
+  color: #6B7B9A;
+}
+
+.input-field:focus {
+  border-color: #FF6B35;
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.15);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.input-field option {
+  background: #1B3A6B;
+  color: #fff;
+}
+
+/* ─── 進度步驟 ─── */
+.step-item {
+  padding: 0.5rem 0;
+  color: #6B7B9A;
+  transition: all 0.3s ease;
+}
+
+.step-item.active {
+  color: #FF6B35;
+  font-weight: 600;
+}
+
+.step-item.done {
+  color: #4ADE80;
+}
+
+.step-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #6B7B9A;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.step-item.active .step-dot {
+  background: #FF6B35;
+  border-color: #FF6B35;
+  box-shadow: 0 0 12px rgba(255, 107, 53, 0.5);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.step-item.done .step-dot {
+  background: #4ADE80;
+  border-color: #4ADE80;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 6px rgba(255, 107, 53, 0.3); }
+  50% { box-shadow: 0 0 16px rgba(255, 107, 53, 0.6); }
+}
+
+/* ─── 動畫 ─── */
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Markdown 預覽 ─── */
+.markdown-body {
+  color: #C8D6E5;
+  line-height: 1.8;
+  font-size: 0.95rem;
+}
+
+.markdown-body h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid rgba(255, 107, 53, 0.3);
+  padding-bottom: 0.5rem;
+}
+
+.markdown-body h2 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  margin-top: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.markdown-body h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #E8F0FB;
+  margin-top: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.markdown-body h4 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FF6B35;
+  margin-top: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.markdown-body p {
+  margin-bottom: 0.8rem;
+}
+
+.markdown-body ul, .markdown-body ol {
+  padding-left: 1.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.markdown-body li {
+  margin-bottom: 0.3rem;
+}
+
+.markdown-body blockquote {
+  border-left: 3px solid #FF6B35;
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: #A0AEC0;
+  font-style: italic;
+}
+
+.markdown-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.markdown-body th {
+  background: rgba(27, 58, 107, 0.5);
+  padding: 0.6rem 0.8rem;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-weight: 600;
+}
+
+.markdown-body td {
+  padding: 0.6rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.markdown-body hr {
+  border: 0;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+  margin: 2rem 0;
+}
+
+.markdown-body strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.markdown-body em {
+  color: #A0AEC0;
+}
+
+/* ─── 捲軸 ─── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ─── Toast ─── */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: 0.8rem 1.5rem;
+  background: #1B3A6B;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0.75rem;
+  color: #fff;
+  font-size: 0.9rem;
+  z-index: 100;
+  opacity: 0;
+  transition: all 0.4s ease;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
