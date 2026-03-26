@@ -67,15 +67,35 @@
     });
   }
 
+  // ── Step 0 顧問觀點收合 ──
+  const expertToggle = document.getElementById('expert-toggle');
+  const expertPanel = document.getElementById('expert-panel');
+  const expertChevron = document.getElementById('expert-chevron');
+
+  if (expertToggle) {
+    expertToggle.addEventListener('click', () => {
+      const isOpen = !expertPanel.classList.contains('hidden');
+      expertPanel.classList.toggle('hidden', isOpen);
+      expertChevron.style.transform = isOpen ? '' : 'rotate(180deg)';
+    });
+  }
+
   // ── 表單提交 ──
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    const expertInput = {
+      core_argument: (document.getElementById('expert_core_argument')?.value || '').trim(),
+      iii_angle: (document.getElementById('expert_iii_angle')?.value || '').trim(),
+      concern: (document.getElementById('expert_concern')?.value || '').trim(),
+    };
 
     const data = {
       company_name: document.getElementById('company_name').value.trim(),
       industry: document.getElementById('industry').value,
       transformation_topic: document.getElementById('transformation_topic').value.trim(),
       supplement: document.getElementById('supplement').value.trim(),
+      expert_input: expertInput,
     };
 
     if (!data.company_name || !data.industry || !data.transformation_topic) {

@@ -13,6 +13,7 @@ from generator.ai_client import (
     DEFAULT_WHO,
 )
 from generator.ai_prompts import (
+    build_expert_context,
     get_m1_prompt,
     get_m2_prompt,
     get_c1_prompt,
@@ -27,6 +28,7 @@ def build_analysis(
     industry: str,
     transformation_topic: str,
     supplement: str = "",
+    expert_input: dict = None,
     progress_callback=None,
 ) -> dict:
     """
@@ -37,6 +39,8 @@ def build_analysis(
         industry: 行業類別
         transformation_topic: 轉型主題
         supplement: 補充說明
+        expert_input: 顧問觀點輸入 dict（keys: core_argument, iii_angle, concern）
+                      若未提供則跳過顧問視角注入，行為與舊版一致。
         progress_callback: 進度回呼函式 callback(step, step_name)
 
     Returns:
@@ -45,6 +49,9 @@ def build_analysis(
     result = {}
     warnings = []
 
+    # 組裝顧問觀點前綴（無輸入時為空字串，所有 prompt 行為不變）
+    expert_ctx = build_expert_context(expert_input) if expert_input else ""
+
     def _update_progress(step: int, name: str):
         if progress_callback:
             progress_callback(step, name)
@@ -52,7 +59,7 @@ def build_analysis(
     # ─── Step 1: M1 全球趨勢洞察 ──────────────────────
     _update_progress(1, "分析全球趨勢")
     try:
-        prompt = get_m1_prompt(industry, transformation_topic)
+        prompt = get_m1_prompt(industry, transformation_topic, expert_ctx)
         result["m1_macro"] = call_gemini(prompt)
     except Exception as e:
         warnings.append(f"Step 1 全球趨勢分析失敗：{str(e)}")
@@ -61,7 +68,7 @@ def build_analysis(
     # ─── Step 2: M2 台灣在地市場分析 ──────────────────
     _update_progress(2, "分析台灣在地市場")
     try:
-        prompt = get_m2_prompt(industry, transformation_topic)
+        prompt = get_m2_prompt(industry, transformation_topic, expert_ctx)
         result["m2_market"] = call_gemini(prompt)
     except Exception as e:
         warnings.append(f"Step 2 台灣市場分析失敗：{str(e)}")
@@ -70,7 +77,7 @@ def build_analysis(
     # ─── Step 3: C1 社會需求與社會價值 ────────────────
     _update_progress(3, "評估社會需求與價值")
     try:
-        prompt = get_c1_prompt(industry, transformation_topic)
+        prompt = get_c1_prompt(industry, transformation_topic, expert_ctx)
         result["c1_customer"] = call_gemini(prompt)
     except Exception as e:
         warnings.append(f"Step 3 社會需求分析失敗：{str(e)}")
@@ -79,7 +86,7 @@ def build_analysis(
     # ─── Step 4: C2 潛在業者與競爭生態 ────────────────
     _update_progress(4, "盤點潛在業者生態")
     try:
-        prompt = get_c2_prompt(industry, transformation_topic, company_name)
+        prompt = get_c2_prompt(industry, transformation_topic, company_name, expert_ctx)
         result["c2_competitor"] = call_gemini(prompt)
     except Exception as e:
         warnings.append(f"Step 4 業者生態分析失敗：{str(e)}")
@@ -88,7 +95,7 @@ def build_analysis(
     # ─── Step 5: Who 業者可行性評估 ───────────────────
     _update_progress(5, "評估業者可行性")
     try:
-        prompt = get_who_prompt(company_name, industry, transformation_topic, supplement)
+        prompt = get_who_prompt(company_name, industry, transformation_topic, supplement, expert_ctx)
         result["who_evaluation"] = call_gemini(prompt)
     except Exception as e:
         warnings.append(f"Step 5 業者可行性評估失敗：{str(e)}")
@@ -104,6 +111,7 @@ def build_analysis(
         "industry": industry,
         "transformation_topic": transformation_topic,
         "supplement": supplement,
+        "expert_input_provided": bool(expert_ctx),
         "warnings": warnings,
     }
 

@@ -82,6 +82,16 @@ def api_generate():
     if not transformation_topic:
         return jsonify({"error": "請輸入轉型主題"}), 400
 
+    # 顧問觀點輸入（選填，Step 0）
+    expert_data = data.get("expert_input", {}) or {}
+    expert_input = {
+        "core_argument": expert_data.get("core_argument", "").strip(),
+        "iii_angle": expert_data.get("iii_angle", "").strip(),
+        "concern": expert_data.get("concern", "").strip(),
+    }
+    # 若三欄位皆空，視為未填寫（fallback 到原始行為）
+    is_expert_input_provided = any(expert_input.values())
+
     # 建立任務
     task_id = str(uuid.uuid4())[:8]
     tasks[task_id] = {
@@ -97,6 +107,7 @@ def api_generate():
             "industry": industry,
             "transformation_topic": transformation_topic,
             "supplement": supplement,
+            "expert_input": expert_input if is_expert_input_provided else None,
         },
     }
 
@@ -137,6 +148,7 @@ def _run_generation(task_id: str):
             industry=inp["industry"],
             transformation_topic=inp["transformation_topic"],
             supplement=inp["supplement"],
+            expert_input=inp.get("expert_input"),
             progress_callback=progress_callback,
         )
 

@@ -58,9 +58,55 @@
     <!-- ──── 表單區塊 ──── -->
     <section id="form-section" class="glass-card p-8 rounded-2xl mb-8 animate-fade-in">
       <h2 class="text-2xl font-bold mb-2">📋 輸入案源資訊</h2>
-      <p class="text-muted text-sm mb-8">請填寫以下欄位以啟動 AI 分析。所有欄位均為必填（補充說明除外）。</p>
+      <p class="text-muted text-sm mb-8">請填寫以下欄位以啟動 AI 分析。所有欄位均為必填（補充說明與顧問觀點除外）。</p>
 
       <form id="generate-form" class="space-y-6">
+
+        <!-- ── Step 0：顧問觀點（選填，可收合） ── -->
+        <div class="rounded-xl border border-accent/30 bg-accent/5 overflow-hidden">
+          <button type="button" id="expert-toggle"
+            class="w-full flex items-center justify-between px-5 py-4 text-left hover:bg-accent/10 transition-colors">
+            <div>
+              <span class="font-semibold text-accent">✍️ 填入你的顧問觀點</span>
+              <span class="ml-2 text-xs text-muted">（選填，但強烈建議填寫）</span>
+            </div>
+            <svg id="expert-chevron" class="w-5 h-5 text-muted transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+            </svg>
+          </button>
+          <div id="expert-panel" class="hidden px-5 pb-5 space-y-4">
+            <p class="text-xs text-muted leading-relaxed">
+              填入你的核心觀點，AI 將以你的角度撰寫，讓輸出讀起來像顧問寫的，而非通用分析。
+            </p>
+            <div>
+              <label for="expert_core_argument" class="block text-sm font-medium mb-1.5">
+                這個案子最重要的論點是什麼？
+                <span class="text-muted font-normal">（1-2 句）</span>
+              </label>
+              <textarea id="expert_core_argument" name="expert_core_argument" rows="2"
+                class="input-field resize-none"
+                placeholder="例：這家業者的核心競爭力是在地服務網絡，AI 導入的最大價值是讓這個優勢數位化而非被取代..."></textarea>
+            </div>
+            <div>
+              <label for="expert_iii_angle" class="block text-sm font-medium mb-1.5">
+                資策會在這個案子最獨特的切入點？
+                <span class="text-muted font-normal">（1-2 句）</span>
+              </label>
+              <textarea id="expert_iii_angle" name="expert_iii_angle" rows="2"
+                class="input-field resize-none"
+                placeholder="例：資策會在此行業已輔導過 30 家業者，最了解台灣中小企業導入 AI 的實際障礙與成功模式..."></textarea>
+            </div>
+            <div>
+              <label for="expert_concern" class="block text-sm font-medium mb-1.5">
+                你最擔心審委或客戶會問什麼挑戰問題？
+                <span class="text-muted font-normal">（1 句，AI 會在論述中預先回應）</span>
+              </label>
+              <input type="text" id="expert_concern" name="expert_concern"
+                class="input-field"
+                placeholder="例：ROI 如何量化？導入期間業者能否維持正常營運？">
+            </div>
+          </div>
+        </div>
         <!-- 業者名稱 -->
         <div>
           <label for="company_name" class="block text-sm font-medium mb-2">業者名稱 <span class="text-accent">*</span></label>
