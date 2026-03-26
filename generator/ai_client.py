@@ -66,6 +66,7 @@ def call_gemini(prompt: str, retry_count: int = 1) -> dict:
         "generation_config": genai.GenerationConfig(
             max_output_tokens=MAX_OUTPUT_TOKENS,
             temperature=TEMPERATURE,
+            response_mime_type="application/json",
         ),
     }
     use_system_instruction = True
